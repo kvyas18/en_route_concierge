@@ -1,5 +1,5 @@
 class Destination {
   final String destinationText;
 
-  Destination({this.destinationText});
+  Destination({required this.destinationText});
 }

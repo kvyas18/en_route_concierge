@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/widgets/vehicle_selection.dart';
+import 'package:en_route_concierge/widgets/vehicle_selection.dart';
 
 class SuggestedRides extends StatelessWidget {
   @override
@@ -14,11 +14,11 @@ class SuggestedRides extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              child: SizedBox(),
-            ),
-            FlatButton(
-              color: _theme.primaryColor,
+            Expanded(child: SizedBox()),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: _theme.primaryColor,
+              ),
               child: Text(
                 "BOOK NOW",
                 style: TextStyle(
@@ -33,9 +33,7 @@ class SuggestedRides extends StatelessWidget {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            margin: EdgeInsets.only(
-              bottom: 150.0,
-            ),
+            margin: EdgeInsets.only(bottom: 150.0),
             padding: EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,9 +47,7 @@ class SuggestedRides extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
+                SizedBox(height: 10.0),
                 VehicleSelection(
                   vehicleType: "TOYOTA CAMRY",
                   image: "assets/images/car.png",

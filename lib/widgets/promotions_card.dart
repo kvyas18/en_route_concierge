@@ -30,7 +30,7 @@ class PromotionCard extends StatelessWidget {
                 color: Colors.white,
                 border: Border(
                   left: BorderSide(
-                    color: Colors.grey[100],
+                    color: Colors.grey[100]!,
                   ),
                 ),
               ),

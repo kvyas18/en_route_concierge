@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:uberr/widgets/app_drawer.dart';
-import 'package:latlong/latlong.dart';
+import 'package:en_route_concierge/widgets/app_drawer.dart';
+import 'package:latlong2/latlong.dart'; // use latlong2 instead of latlong
 import 'package:geolocator/geolocator.dart';
 
 class Homepage extends StatefulWidget {
@@ -10,45 +10,41 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  LatLng myLocation;
+  LatLng? myLocation;
   List<Marker> _markers = [
     Marker(
       width: 60.0,
       height: 60.0,
       point: LatLng(51.32, -0.083),
-      builder: (ctx) => Container(
-        child: Image.asset(
+      child: Image.asset(
           "assets/images/car2.png",
           width: 60.0,
           height: 60.0,
         ),
       ),
-    ),
     Marker(
       width: 60.0,
       height: 60.0,
       point: LatLng(51.3, -0.08),
-      builder: (ctx) => Container(
-        child: Image.asset(
+      child: Image.asset(
           "assets/images/car2.png",
           width: 60.0,
           height: 60.0,
         ),
       ),
-    ),
     Marker(
       width: 60.0,
       height: 60.0,
       point: LatLng(51.29, -0.077),
-      builder: (ctx) => Container(
-        child: Image.asset(
+      child: Image.asset(
           "assets/images/car2.png",
           width: 60.0,
           height: 60.0,
         ),
       ),
-    )
+
   ];
+
   @override
   void initState() {
     super.initState();
@@ -56,31 +52,44 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future<void> getMyLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    myLocation = LatLng(position.latitude, position.longitude);
-    this.setState(() {
+    // Request permission if needed
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.always &&
+          permission != LocationPermission.whileInUse) {
+        print('Location permission denied');
+        return;
+      }
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      myLocation = LatLng(position.latitude, position.longitude);
       _markers.add(
         Marker(
           width: 60.0,
           height: 60.0,
-          point: myLocation,
-          builder: (ctx) => Container(
-            child: Row(
+          point: myLocation!,
+          child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Container(
-                  width: 30.0,
-                  child: Icon(Icons.person_pin_circle),
+                Icon(
+                  Icons.person_pin_circle,
+                  size: 30.0,
+                  color: Colors.blue,
                 ),
-                Container(
-                  child: Text("Pick Up Here"),
-                )
+                SizedBox(width: 4),
+                Text("Pick Up Here"),
               ],
             ),
           ),
-        ),
       );
     });
+
     print(position);
   }
 
@@ -88,7 +97,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       drawer: AppDrawer(),
       body: SafeArea(
         child: Column(
@@ -97,28 +106,18 @@ class _HomepageState extends State<Homepage> {
               children: <Widget>[
                 Container(
                   height: MediaQuery.of(context).size.height - 230.0,
-                  // child: GoogleMap(
-                  //   myLocationButtonEnabled: true,
-                  //   myLocationEnabled: true,
-                  //   markers: _markers,
-                  //   onMapCreated: _onMapCreated,
-                  //   initialCameraPosition: CameraPosition(
-                  //     target: _center,
-                  //     zoom: 11.0,
-                  //   ),
-                  // ),
                   child: FlutterMap(
                     options: MapOptions(
                       center: LatLng(51.3, -0.08),
                       zoom: 13.0,
                     ),
-                    layers: [
-                      TileLayerOptions(
+                    children: [
+                      TileLayer(
                         urlTemplate:
-                            "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                         subdomains: ['a', 'b', 'c'],
                       ),
-                      MarkerLayerOptions(markers: _markers)
+                      MarkerLayer(markers: _markers),
                     ],
                   ),
                 ),
@@ -140,17 +139,11 @@ class _HomepageState extends State<Homepage> {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                constraints: BoxConstraints(),
                 padding: EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Color.fromRGBO(
-                        0,
-                        0,
-                        0,
-                        0.15,
-                      ),
+                      color: Color.fromRGBO(0, 0, 0, 0.15),
                       blurRadius: 25.0,
                     ),
                   ],
@@ -161,20 +154,16 @@ class _HomepageState extends State<Homepage> {
                   children: <Widget>[
                     Text(
                       "Where are you going to?",
-                      style: _theme.textTheme.title,
+                      style: _theme.textTheme.titleLarge,
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                    SizedBox(height: 10.0),
                     Text(
                       "Book on demand or pre-scheduled rides",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
+                    SizedBox(height: 15.0),
                     InkWell(
                       onTap: () {},
                       child: Hero(
@@ -182,14 +171,10 @@ class _HomepageState extends State<Homepage> {
                         child: Container(
                           height: 50.0,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey[300],
-                            ),
+                            border: Border.all(color: Colors.grey[300]!),
                             borderRadius: BorderRadius.circular(6.0),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 15.0,
-                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 15.0),
                           child: Row(
                             children: <Widget>[
                               Expanded(

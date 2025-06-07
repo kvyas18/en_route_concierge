@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uberr/providers/walkthrough_provider.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/widgets/walkthrough_stepper.dart';
-import 'package:uberr/widgets/walkthrough_template.dart';
+import 'package:en_route_concierge/providers/walkthrough_provider.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/widgets/walkthrough_stepper.dart';
+import 'package:en_route_concierge/widgets/walkthrough_template.dart';
 
 class WalkThrough extends StatelessWidget {
   final PageController _pageViewController = PageController(initialPage: 0);
@@ -61,7 +61,7 @@ class WalkThrough extends StatelessWidget {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            if (_pageViewController.page >= 2) {
+                            if (_pageViewController.page! >= 2) {
                               Navigator.of(context).pushReplacementNamed(
                                   UnAuthenticatedPageRoute);
                               return;

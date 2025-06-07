@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/widgets/ride_card.dart';
-import 'package:uberr/widgets/ride_cards.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/widgets/ride_card.dart';
+import 'package:en_route_concierge/widgets/ride_cards.dart';
 
 class MyRides extends StatelessWidget {
   @override
@@ -28,7 +28,7 @@ class MyRides extends StatelessWidget {
           children: <Widget>[
             Text(
               "My rides",
-              style: _theme.textTheme.title,
+              style: _theme.textTheme.titleLarge,
             ),
             SizedBox(
               height: 15.0,

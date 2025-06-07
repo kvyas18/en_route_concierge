@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/models/place.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/widgets/location_card.dart';
+import 'package:en_route_concierge/models/place.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/widgets/location_card.dart';
 
 class Favorites extends StatelessWidget {
   final List<Place> _places = [
@@ -69,7 +69,7 @@ class Favorites extends StatelessWidget {
           children: <Widget>[
             Text(
               "My favorites",
-              style: _theme.textTheme.title.merge(TextStyle(fontSize: 26.0)),
+              style: _theme.textTheme.titleLarge?.merge(TextStyle(fontSize: 26.0)),
             ),
             SizedBox(
               height: 20.0,

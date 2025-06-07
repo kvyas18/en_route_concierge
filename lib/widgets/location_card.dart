@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/models/place.dart';
+import 'package:en_route_concierge/models/place.dart';
 
 class LocationCard extends StatelessWidget {
   final Place place;

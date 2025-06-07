@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/styles/colors.dart';
-import 'package:uberr/widgets/custom_text_form_field.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/styles/colors.dart';
+import 'package:en_route_concierge/widgets/custom_text_form_field.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _countryCodeController = TextEditingController(text: '+234');
+  final _phoneController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _countryCodeController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
+
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
@@ -21,7 +47,7 @@ class Register extends StatelessWidget {
             }
           },
         ),
-        actions: <Widget>[
+        actions: [
           GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed(LoginRoute);
@@ -46,38 +72,41 @@ class Register extends StatelessWidget {
           padding: EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Sign Up",
-                  style: _theme.textTheme.title.merge(
-                    TextStyle(fontSize: 30.0),
+                  style: _theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 30.0,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30.0,
+              SizedBox(height: 30.0),
+              Form(
+                key: _formKey,
+                child: _signupForm(),
               ),
-              _signupForm(),
-              SizedBox(
-                height: 30.0,
-              ),
+              SizedBox(height: 30.0),
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(bottom: 30.0),
                 height: 45.0,
-                child: FlatButton(
-                  color: _theme.primaryColor,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: _theme.primaryColor,
+                  ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(OtpVerificationRoute);
+                    if (_formKey.currentState?.validate() ?? true) {
+                      Navigator.of(context).pushNamed(OtpVerificationRoute);
+                    }
                   },
                   child: Text(
                     "SIGN UP",
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -87,60 +116,79 @@ class Register extends StatelessWidget {
 
   Widget _signupForm() {
     return Column(
-      children: <Widget>[
+      children: [
         Row(
-          children: <Widget>[
+          children: [
             Expanded(
               child: CustomTextFormField(
+                controller: _firstNameController,
+                verticalPadding: 10.0,
+                suffixIcon: SizedBox.shrink(),
                 hintText: "First name",
+                value: _firstNameController.text,
               ),
             ),
             SizedBox(width: 15.0),
             Expanded(
               child: CustomTextFormField(
+                controller: _lastNameController,
+                verticalPadding: 10.0,
+                suffixIcon: SizedBox.shrink(),
                 hintText: "Last name",
+                value: _lastNameController.text,
               ),
-            )
+            ),
           ],
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         CustomTextFormField(
+          controller: _emailController,
+          verticalPadding: 10.0,
+          suffixIcon: SizedBox.shrink(),
           hintText: "Email",
+          value: _emailController.text,
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         Row(
-          children: <Widget>[
+          children: [
             Container(
               width: 80.0,
               child: CustomTextFormField(
+                controller: _countryCodeController,
+                verticalPadding: 10.0,
+                suffixIcon: SizedBox.shrink(),
                 hintText: "+234",
+                value: _countryCodeController.text,
               ),
             ),
             SizedBox(width: 15.0),
             Expanded(
               child: CustomTextFormField(
+                controller: _phoneController,
+                verticalPadding: 10.0,
+                suffixIcon: SizedBox.shrink(),
                 hintText: "Phone number",
+                value: _phoneController.text,
               ),
-            )
+            ),
           ],
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         CustomTextFormField(
+          controller: _passwordController,
+          verticalPadding: 10.0,
+          suffixIcon: SizedBox.shrink(),
           hintText: "Password",
+          value: _passwordController.text,
         ),
-        SizedBox(
-          height: 25.0,
-        ),
+        SizedBox(height: 25.0),
         Text(
-          "By clicking \"Sign Up\" you agree to our terms and conditions as well as our pricacy policy",
-          style: TextStyle(fontWeight: FontWeight.bold, color: dbasicDarkColor),
-        )
+          'By clicking "Sign Up" you agree to our terms and conditions as well as our privacy policy',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: dbasicDarkColor,
+          ),
+        ),
       ],
     );
   }

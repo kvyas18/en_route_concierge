@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/styles/colors.dart';
+import 'package:en_route_concierge/styles/colors.dart';
 
 final TextStyle basicTextStyle = TextStyle(
   fontFamily: "SFUIDisplay",
@@ -8,15 +8,15 @@ final TextStyle basicTextStyle = TextStyle(
 );
 
 final TextTheme textTheme = TextTheme(
-  body1: basicTextStyle,
-  body2: basicTextStyle.merge(TextStyle(fontSize: 14.0)),
-  title: basicTextStyle.merge(
+  bodyMedium: basicTextStyle,
+  bodyLarge: basicTextStyle.merge(TextStyle(fontSize: 14.0)),
+  titleLarge: basicTextStyle.merge(
     TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: 30.0,
     ),
   ),
-  subtitle: basicTextStyle.merge(
+  titleSmall: basicTextStyle.merge(
     TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 12.0,
@@ -30,7 +30,7 @@ class ThemeScheme {
       brightness: Brightness.dark,
       scaffoldBackgroundColor: dbackgroundColor,
       primaryColor: dprimaryColor,
-      accentColor: dsecondaryColor,
+      hintColor: dsecondaryColor,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: Colors.white),
@@ -38,7 +38,7 @@ class ThemeScheme {
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[400],
+            color: Colors.grey[400]!,
           ),
         ),
       ),
@@ -50,7 +50,7 @@ class ThemeScheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: lbackgroundColor,
       primaryColor: lprimaryColor,
-      accentColor: lsecondaryColor,
+      hintColor: lsecondaryColor,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: dbasicDarkColor),
@@ -58,7 +58,7 @@ class ThemeScheme {
       inputDecorationTheme: InputDecorationTheme(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[400],
+            color: Colors.grey[400]!,
           ),
         ),
       ),

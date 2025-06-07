@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/styles/colors.dart';
-import 'package:uberr/widgets/custom_text_form_field.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/styles/colors.dart';
+import 'package:en_route_concierge/widgets/custom_text_form_field.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
@@ -52,18 +69,14 @@ class Login extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Log In",
-                  style: _theme.textTheme.title.merge(
+                  style: _theme.textTheme.titleLarge?.merge(
                     TextStyle(fontSize: 30.0),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30.0,
-              ),
+              SizedBox(height: 30.0),
               _loginForm(context),
-              SizedBox(
-                height: 30.0,
-              ),
+              SizedBox(height: 30.0),
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,14 +87,14 @@ class Login extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                    SizedBox(height: 10.0),
                     Container(
                       height: 45.0,
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {},
-                        color: facebookColor,
+                        style: TextButton.styleFrom(
+                          backgroundColor: facebookColor,
+                        ),
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -92,7 +105,7 @@ class Login extends StatelessWidget {
                               child: Text(
                                 "Connect with Facebook",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
+                                style: _theme.textTheme.bodyMedium?.merge(
                                   TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
@@ -106,17 +119,18 @@ class Login extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          border: Border.all(
-                            color: _theme.primaryColor,
-                          ),
-                          borderRadius: BorderRadius.circular(3.0)),
-                      margin: EdgeInsets.only(
-                        top: 10.0,
+                        border: Border.all(
+                          color: _theme.primaryColor,
+                        ),
+                        borderRadius: BorderRadius.circular(3.0),
                       ),
+                      margin: EdgeInsets.only(top: 10.0),
                       height: 45.0,
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {},
-                        color: _theme.scaffoldBackgroundColor,
+                        style: TextButton.styleFrom(
+                          backgroundColor: _theme.scaffoldBackgroundColor,
+                        ),
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -127,7 +141,7 @@ class Login extends StatelessWidget {
                               child: Text(
                                 "Connect with Phone number",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
+                                style: _theme.textTheme.bodyMedium?.merge(
                                   TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: _theme.primaryColor,
@@ -138,7 +152,7 @@ class Login extends StatelessWidget {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
@@ -156,31 +170,46 @@ class Login extends StatelessWidget {
       children: <Widget>[
         CustomTextFormField(
           hintText: "Email",
+          verticalPadding: 12.0,
+          controller: _emailController,
+          value: _emailController.text,
+          suffixIcon: SizedBox.shrink(),
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         CustomTextFormField(
           hintText: "Password",
+          verticalPadding: 12.0,
+          controller: _passwordController,
+          value: _passwordController.text,
+          obscureText: _obscurePassword,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscurePassword = !_obscurePassword;
+              });
+            },
+          ),
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         Text(
           "Forgot password?",
           style: TextStyle(
-              color: _theme.primaryColor,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold),
+            color: _theme.primaryColor,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        SizedBox(
-          height: 25.0,
-        ),
+        SizedBox(height: 25.0),
         Container(
           width: MediaQuery.of(context).size.width,
           height: 45.0,
-          child: FlatButton(
-            color: _theme.primaryColor,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: _theme.primaryColor,
+            ),
             onPressed: () {
               Navigator.of(context).pushReplacementNamed(HomepageRoute);
             },
@@ -189,7 +218,7 @@ class Login extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
           ),
-        )
+        ),
       ],
     );
   }

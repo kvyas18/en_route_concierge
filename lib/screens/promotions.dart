@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/widgets/promotions_card.dart';
+import 'package:en_route_concierge/widgets/promotions_card.dart';
 
 class Promotions extends StatelessWidget {
   @override
@@ -82,7 +82,7 @@ class Promotions extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "My Promotions",
-                      style: _theme.textTheme.title,
+                      style: _theme.textTheme.titleLarge,
                     ),
                     SizedBox(
                       height: 15.0,

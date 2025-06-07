@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/models/debitcard.dart';
-import 'package:uberr/widgets/app_drawer.dart';
-import 'package:uberr/widgets/card_container.dart';
+import 'package:en_route_concierge/models/debitcard.dart';
+import 'package:en_route_concierge/widgets/app_drawer.dart';
+import 'package:en_route_concierge/widgets/card_container.dart';
 
 class Payment extends StatelessWidget {
   @override
@@ -22,7 +22,7 @@ class Payment extends StatelessWidget {
       ),
     ];
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
@@ -45,7 +45,7 @@ class Payment extends StatelessWidget {
             children: [
               Text(
                 "Payment methods",
-                style: _theme.textTheme.title,
+                style: _theme.textTheme.titleLarge,
               ),
               SizedBox(
                 height: 15.0,
@@ -58,7 +58,7 @@ class Payment extends StatelessWidget {
                   leading: Icon(
                     Icons.credit_card,
                     size: 50.0,
-                    color: _theme.accentColor,
+                    color: _theme.colorScheme.secondary,
                   ),
                   title: Text(
                     "Cash payment",
@@ -88,7 +88,7 @@ class Payment extends StatelessWidget {
               ),
               Text(
                 "Choose a different payment method from a list of already setup payment methods.",
-                style: _theme.textTheme.subtitle.merge(
+                style: _theme.textTheme.titleSmall?.merge(
                   TextStyle(fontSize: 14.0),
                 ),
               ),
@@ -111,8 +111,10 @@ class Payment extends StatelessWidget {
               ),
               Container(
                 height: 45.0,
-                child: FlatButton(
-                  color: _theme.primaryColor,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: _theme.primaryColor,
+                  ),
                   onPressed: () {},
                   child: Text(
                     "ADD PAYMENT METHOD",

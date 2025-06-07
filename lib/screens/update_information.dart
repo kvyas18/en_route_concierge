@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/styles/colors.dart';
-import 'package:uberr/widgets/custom_text_form_field.dart';
+import 'package:en_route_concierge/styles/colors.dart';
+import 'package:en_route_concierge/widgets/custom_text_form_field.dart';
 
 class UpdateInformation extends StatelessWidget {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
@@ -29,14 +34,12 @@ class UpdateInformation extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
                       "Update Information",
-                      style: _theme.textTheme.title.merge(
+                      style: _theme.textTheme.titleLarge?.merge(
                         TextStyle(fontSize: 30.0),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
+                  SizedBox(height: 30.0),
                   _updateProfileForm(),
                 ],
               ),
@@ -44,8 +47,10 @@ class UpdateInformation extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 45.0,
-              child: FlatButton(
-                color: _theme.primaryColor,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: _theme.primaryColor,
+                ),
                 onPressed: () {},
                 child: Text(
                   "SAVE INFORMATION",
@@ -66,28 +71,40 @@ class UpdateInformation extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: CustomTextFormField(
+                controller: firstNameController,
                 hintText: "First name",
+                value: firstNameController.text,
+                verticalPadding: 15.0,
+                suffixIcon: null,
               ),
             ),
             SizedBox(width: 15.0),
             Expanded(
               child: CustomTextFormField(
+                controller: lastNameController,
                 hintText: "Last name",
+                value: lastNameController.text,
+                verticalPadding: 15.0,
+                suffixIcon: null,
               ),
-            )
+            ),
           ],
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         CustomTextFormField(
+          controller: emailController,
           hintText: "Email",
+          value: emailController.text,
+          verticalPadding: 15.0,
+          suffixIcon: null,
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20.0),
         CustomTextFormField(
+          controller: passwordController,
           hintText: "Password",
+          value: passwordController.text,
+          verticalPadding: 15.0,
+          suffixIcon: null,
         ),
       ],
     );

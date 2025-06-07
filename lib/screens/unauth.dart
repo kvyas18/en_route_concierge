@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/styles/colors.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/styles/colors.dart';
 
 class UnAuth extends StatelessWidget {
   @override
@@ -28,8 +28,10 @@ class UnAuth extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child: FlatButton(
-                          color: _theme.primaryColor,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: _theme.primaryColor,
+                          ),
                           child: Text(
                             "LOGIN",
                             style: TextStyle(
@@ -43,8 +45,10 @@ class UnAuth extends StatelessWidget {
                       ),
                       SizedBox(width: 40.0),
                       Expanded(
-                        child: FlatButton(
-                          color: facebookColor,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: facebookColor,
+                          ),
                           child: Text(
                             "REGISTER",
                             style: TextStyle(
@@ -58,9 +62,7 @@ class UnAuth extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
+                  SizedBox(height: 15.0),
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -69,11 +71,9 @@ class UnAuth extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Or connect with social",
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15.0,
                         ),
                       ),
                       Expanded(
@@ -85,9 +85,7 @@ class UnAuth extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 15.0),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15.0,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
                     height: 45.0,
                     decoration: BoxDecoration(
                       color: facebookColor,
@@ -114,9 +112,7 @@ class UnAuth extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 15.0),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15.0,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
                     height: 45.0,
                     decoration: BoxDecoration(
                       border: Border.all(color: _theme.primaryColor),

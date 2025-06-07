@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class VehicleSelection extends StatelessWidget {
   final String vehicleType;
   final String image;
-  VehicleSelection({this.vehicleType, this.image});
+  VehicleSelection({required this.vehicleType, required this.image});
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
@@ -44,7 +44,7 @@ class VehicleSelection extends StatelessWidget {
                 Text(
                   "Best Save",
                   style: TextStyle(
-                    color: _theme.accentColor,
+                    color: _theme.colorScheme.secondary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

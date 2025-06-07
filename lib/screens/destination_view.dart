@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/models/destination.dart';
-import 'package:uberr/models/place.dart';
-import 'package:uberr/styles/colors.dart';
-import 'package:uberr/widgets/location_card.dart';
+import 'package:en_route_concierge/models/destination.dart';
+import 'package:en_route_concierge/models/place.dart';
+import 'package:en_route_concierge/styles/colors.dart';
+import 'package:en_route_concierge/widgets/location_card.dart';
 
 class DestinationView extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _DestinationViewState extends State<DestinationView> {
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
@@ -99,12 +99,12 @@ class _DestinationViewState extends State<DestinationView> {
                             isDense: true,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.grey[400],
+                                color: Colors.grey[400]!,
                               ),
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.grey[400],
+                                color: Colors.grey[400]!,
                               ),
                             ),
                             contentPadding: EdgeInsets.only(bottom: 10.0),
@@ -125,14 +125,14 @@ class _DestinationViewState extends State<DestinationView> {
                                             ? InputBorder.none
                                             : UnderlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: Colors.grey[400],
+                                                  color: Colors.grey[400]!,
                                                 ),
                                               ),
                                         focusedBorder: lastIndex
                                             ? InputBorder.none
                                             : UnderlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: Colors.grey[400],
+                                                  color: Colors.grey[400]!,
                                                 ),
                                               ),
                                         contentPadding:

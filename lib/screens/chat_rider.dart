@@ -1,12 +1,26 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:uberr/styles/colors.dart';
-import 'package:uberr/widgets/custom_text_form_field.dart';
+import 'package:en_route_concierge/styles/colors.dart';
+import 'package:en_route_concierge/widgets/custom_text_form_field.dart';
 
-class ChatRider extends StatelessWidget {
+class ChatRider extends StatefulWidget {
+  @override
+  _ChatRiderState createState() => _ChatRiderState();
+}
+
+class _ChatRiderState extends State<ChatRider> {
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
+
     BubbleStyle styleSomebody = BubbleStyle(
       nip: BubbleNip.leftTop,
       color: Colors.white,
@@ -14,6 +28,7 @@ class ChatRider extends StatelessWidget {
       margin: BubbleEdges.only(top: 8.0, bottom: 12.0, right: 50.0),
       alignment: Alignment.topLeft,
     );
+
     BubbleStyle styleMe = BubbleStyle(
       nip: BubbleNip.rightTop,
       color: _theme.primaryColor,
@@ -23,33 +38,26 @@ class ChatRider extends StatelessWidget {
     );
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: <Widget>[
             Container(
               alignment: Alignment.center,
               height: 100.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
+              color: Colors.white,
               child: ListTile(
                 contentPadding: EdgeInsets.only(right: 10.0),
                 leading: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black,
-                  ),
+                  icon: Icon(Icons.arrow_back_ios, color: Colors.black),
                   onPressed: () {
                     if (Navigator.of(context).canPop()) {
                       Navigator.of(context).pop();
                     }
                   },
                 ),
-                title: Container(
-                  padding: EdgeInsets.only(
-                    bottom: 2.0,
-                  ),
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 2.0),
                   child: Text(
                     "Cristiano Ronaldo",
                     textAlign: TextAlign.center,
@@ -72,88 +80,87 @@ class ChatRider extends StatelessWidget {
                 trailing: CircleAvatar(
                   radius: 25.0,
                   backgroundImage: NetworkImage(
-                      "https://pbs.twimg.com/profile_images/1214214436283568128/KyumFmOO.jpg"),
+                    "https://pbs.twimg.com/profile_images/1214214436283568128/KyumFmOO.jpg",
+                  ),
                 ),
               ),
             ),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(
-                  15.0,
-                ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: <Widget>[
                     Text(
                       "Today at 5:03 PM",
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(color: Colors.grey),
                     ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
+                    SizedBox(height: 15.0),
                     Bubble(
                       style: styleMe,
                       child: Text(
                         "Hello, are you nearby?",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     Bubble(
                       style: styleSomebody,
                       child: Text(
                         "I'll be there in a few minutes.",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
                     Bubble(
                       style: styleMe,
                       child: Text(
                         "Ok, I'm in front of the bus stop",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     Bubble(
                       style: styleSomebody,
                       child: Text(
-                        "Sorry, I'm stuck in traffic. \n Please give me a moment",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
+                        "Sorry, I'm stuck in traffic. \nPlease give me a moment",
+                        style: TextStyle(fontWeight: FontWeight.w600),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
             Container(
               height: 120.0,
-              padding: EdgeInsets.symmetric(
-                horizontal: 15.0,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     child: CustomTextFormField(
                       hintText: "Enter a message...",
+                      controller: _messageController,
+                      value: _messageController.text,
+                      verticalPadding: 12.0,
+                      suffixIcon: SizedBox.shrink(),
                       showLabel: false,
                     ),
                   ),
-                  SizedBox(
-                    width: 10.0,
+                  SizedBox(width: 10.0),
+                  IconButton(
+                    icon: Icon(
+                      Icons.send,
+                      color: _theme.primaryColor,
+                      size: 35.0,
+                    ),
+                    onPressed: () {
+                      // Handle sending message
+                      final message = _messageController.text.trim();
+                      if (message.isNotEmpty) {
+                        print('Sending message: $message');
+                        // Clear input after sending
+                        _messageController.clear();
+                        setState(() {}); // refresh to update value param if used
+                      }
+                    },
                   ),
-                  Icon(
-                    Icons.send,
-                    color: _theme.primaryColor,
-                    size: 35.0,
-                  )
                 ],
               ),
             )

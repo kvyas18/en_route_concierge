@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/models/debitcard.dart';
+import 'package:en_route_concierge/models/debitcard.dart';
 
 class CardContainer extends StatelessWidget {
   final DebitCard cardDetail;
-  CardContainer({this.cardDetail});
+  CardContainer({required this.cardDetail});
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);

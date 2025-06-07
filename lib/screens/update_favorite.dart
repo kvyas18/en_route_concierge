@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:uberr/styles/colors.dart';
-import 'package:uberr/widgets/custom_text_form_field.dart';
+import 'package:en_route_concierge/styles/colors.dart';
+import 'package:en_route_concierge/widgets/custom_text_form_field.dart';
 
 class UpdateFavorite extends StatelessWidget {
+  final TextEditingController placeNameController =
+  TextEditingController(text: "McDonald's");
+  final TextEditingController placeAddressController =
+  TextEditingController(text: "13424 NE 20th St. Bellevue, WA, 98005");
+
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
@@ -36,7 +41,7 @@ class UpdateFavorite extends StatelessWidget {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4.0),
                   ),
-                  child: FlatButton.icon(
+                  child: TextButton.icon(
                     onPressed: () {},
                     icon: Icon(Icons.home),
                     label: Text(
@@ -53,7 +58,7 @@ class UpdateFavorite extends StatelessWidget {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4.0),
                   ),
-                  child: FlatButton.icon(
+                  child: TextButton.icon(
                     onPressed: () {},
                     icon: Icon(Icons.work),
                     label: Text(
@@ -70,7 +75,7 @@ class UpdateFavorite extends StatelessWidget {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4.0),
                   ),
-                  child: FlatButton.icon(
+                  child: TextButton.icon(
                     onPressed: () {},
                     icon: Icon(Icons.pin_drop),
                     label: Text(
@@ -83,24 +88,24 @@ class UpdateFavorite extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: 70.0,
-            ),
+            SizedBox(height: 70.0),
             CustomTextFormField(
+              controller: placeNameController,
               hintText: "Place name",
-              value: "McDonald's",
+              value: placeNameController.text,
+              verticalPadding: 15.0,
+              suffixIcon: null,
             ),
-            SizedBox(
-              height: 25.0,
-            ),
+            SizedBox(height: 25.0),
             CustomTextFormField(
+              controller: placeAddressController,
               hintText: "Place address",
-              value: "13424 NE 20th St. Bellevue, WA, 98005",
+              value: placeAddressController.text,
+              verticalPadding: 15.0,
+              suffixIcon: null,
             ),
-            SizedBox(
-              height: 25.0,
-            ),
-            FlatButton.icon(
+            SizedBox(height: 25.0),
+            TextButton.icon(
               onPressed: () {},
               icon: Icon(
                 Icons.map,
@@ -112,16 +117,16 @@ class UpdateFavorite extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              color: _theme.primaryColor,
+              style: TextButton.styleFrom(
+                backgroundColor: _theme.primaryColor,
+              ),
             ),
-            Expanded(
-              child: SizedBox(),
-            ),
+            Expanded(child: SizedBox()),
             Container(
               color: Colors.yellow,
               height: 40.0,
               width: MediaQuery.of(context).size.width,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: Text(
                   "SAVE LOCATION",
@@ -129,7 +134,9 @@ class UpdateFavorite extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                color: _theme.primaryColor,
+                style: TextButton.styleFrom(
+                  backgroundColor: _theme.primaryColor,
+                ),
               ),
             ),
           ],

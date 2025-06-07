@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uberr/providers/walkthrough_provider.dart';
-import 'package:uberr/router.dart';
-import 'package:uberr/styles/theme_data.dart';
+import 'package:en_route_concierge/providers/walkthrough_provider.dart';
+import 'package:en_route_concierge/router.dart';
+import 'package:en_route_concierge/styles/theme_data.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
       create: (BuildContext context) => WalkthroughProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -14,6 +19,6 @@ void main() {
         theme: ThemeScheme.light(),
         initialRoute: WalkthroughRoute,
       ),
-    ),
-  );
+    );
+  }
 }

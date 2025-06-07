@@ -6,9 +6,7 @@ class WalkThroughTemplate extends StatelessWidget {
   final Image image;
 
   WalkThroughTemplate(
-      {@required this.title, @required this.subtitle, @required this.image})
-      : assert(title != null),
-        assert(subtitle != null);
+      {required this.title, required this.subtitle, required this.image});
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
@@ -31,12 +29,12 @@ class WalkThroughTemplate extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         title,
-                        style: _theme.textTheme.title,
+                        style: _theme.textTheme.titleLarge,
                       ),
                       SizedBox(height: 10.0),
                       Text(
                         subtitle,
-                        style: _theme.textTheme.body1.merge(
+                        style: _theme.textTheme.bodyMedium?.merge(
                           TextStyle(
                             color: Colors.grey[600],
                             height: 1.3,

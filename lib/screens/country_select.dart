@@ -35,11 +35,11 @@ class _SelectCountryState extends State<SelectCountry> {
     "Y",
     "Z"
   ];
-  List<String> _countries;
+  late List<String> _countries;
 
   Future<List<Country>> _getCountries() async {
     try {
-      return await IsoCountries.iso_countries;
+      return await IsoCountries.isoCountries;
     } on PlatformException {
       return [];
     }
@@ -62,7 +62,7 @@ class _SelectCountryState extends State<SelectCountry> {
     final ThemeData _theme = Theme.of(context);
     final ScrollController _listController = ScrollController();
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
@@ -84,7 +84,7 @@ class _SelectCountryState extends State<SelectCountry> {
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
                       "Select Country",
-                      style: _theme.textTheme.title.merge(
+                      style: _theme.textTheme.titleLarge?.merge(
                         TextStyle(fontSize: 30.0),
                       ),
                     ),
@@ -131,7 +131,7 @@ class _SelectCountryState extends State<SelectCountry> {
                                             Text(
                                               _countries[index].toUpperCase(),
                                               style:
-                                                  _theme.textTheme.title.merge(
+                                                  _theme.textTheme.titleLarge?.merge(
                                                 TextStyle(fontSize: 18.0),
                                               ),
                                             ),
