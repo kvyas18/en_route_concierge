@@ -16,9 +16,9 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: "Olayemi Garuba");
-    _emailController = TextEditingController(text: "donyemisco@gmail.com");
-    _phoneController = TextEditingController(text: "444-509-980-103");
+    _nameController = TextEditingController(text: "Joe Smith");
+    _emailController = TextEditingController(text: "joesmith@gmail.com");
+    _phoneController = TextEditingController(text: "1-111-222-3333");
   }
 
   @override
@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Hello Olayemii !",
+                    "Hello Joe!",
                     style: _theme.textTheme.titleLarge
                         ?.merge(TextStyle(fontSize: 26.0)),
                   ),

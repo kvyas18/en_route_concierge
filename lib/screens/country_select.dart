@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:iso_countries/iso_countries.dart';
+import 'package:en_route_concierge/data/countries.dart';
 
 class SelectCountry extends StatefulWidget {
   @override
@@ -9,172 +8,117 @@ class SelectCountry extends StatefulWidget {
 
 class _SelectCountryState extends State<SelectCountry> {
   final List<String> _alphabets = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "Y",
-    "Z"
+    "A", "B", "C", "D", "E", "F", "G",
+    "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U",
+    "V", "W", "Y", "Z"
   ];
-  late List<String> _countries;
 
-  Future<List<Country>> _getCountries() async {
-    try {
-      return await IsoCountries.isoCountries;
-    } on PlatformException {
-      return [];
-    }
-  }
+  late List<String> _countries;
+  late List<String> _filteredCountries;
+  final ScrollController _listController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _getCountries().then(
-      (result) => this.setState(
-        () {
-          _countries = result.map((country) => country.name).toList();
-        },
-      ),
+    _countries = countryNames;
+    _filteredCountries = _countries;
+  }
+
+  void _filterCountries(String query) {
+    setState(() {
+      _filteredCountries = _countries
+          .where((country) => country.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
+
+  void _scrollToAlphabet(String letter) {
+    final index = _filteredCountries.indexWhere(
+      (country) => country.toUpperCase().startsWith(letter),
     );
+    if (index != -1) {
+      _listController.animateTo(
+        index * 60.0,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
-    final ScrollController _listController = ScrollController();
+    final theme = Theme.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: _theme.scaffoldBackgroundColor,
-        automaticallyImplyLeading: false,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        automaticallyImplyLeading: true,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {},
-        ),
+        title: Text("Select Country", style: theme.textTheme.titleLarge),
       ),
-      body: Container(
-        padding: EdgeInsets.all(15.0),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
         child: Column(
-          children: <Widget>[
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              color: Color(0xffEEF1F8),
+              child: TextFormField(
+                controller: _searchController,
+                onChanged: _filterCountries,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.search, color: Colors.grey),
+                  hintText: "Search...",
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
             Expanded(
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text(
-                      "Select Country",
-                      style: _theme.textTheme.titleLarge?.merge(
-                        TextStyle(fontSize: 30.0),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
-                    color: Color(0xffEEF1F8),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        hintText: "Search...",
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  _countries == null
-                      ? CircularProgressIndicator()
-                      : Flexible(
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: ListView.builder(
-                                  controller: _listController,
-                                  itemCount: _countries.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      height: 60.0,
-                                      child: ListTile(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 0.0, vertical: 0.0),
-                                        title: Wrap(
-                                          children: <Widget>[
-                                            Text(
-                                              _countries[index].toUpperCase(),
-                                              style:
-                                                  _theme.textTheme.titleLarge?.merge(
-                                                TextStyle(fontSize: 18.0),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 5.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
+                children: [
+                  Expanded(
+                    child: _filteredCountries.isEmpty
+                        ? Center(child: Text("No countries found"))
+                        : ListView.builder(
+                            controller: _listController,
+                            itemCount: _filteredCountries.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(
+                                  _filteredCountries[index],
+                                  style: theme.textTheme.bodyLarge,
                                 ),
-                              ),
-                              Column(
-                                children: _alphabets.map(
-                                  (String alphabet) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        int index =
-                                            _countries.indexWhere((country) {
-                                                  return country.startsWith(
-                                                      alphabet.toUpperCase());
-                                                }) ??
-                                                0;
-                                        _listController.jumpTo(
-                                          index * 60.0,
-                                        );
-                                      },
-                                      child: Text(
-                                        alphabet,
-                                        style: TextStyle(
-                                          color: _theme.primaryColor,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ).toList(),
-                              )
-                            ],
+                                onTap: () {
+                                  Navigator.pop(context, _filteredCountries[index]);
+                                },
+                              );
+                            },
                           ),
-                        )
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: _alphabets.map((letter) {
+                      return GestureDetector(
+                        onTap: () => _scrollToAlphabet(letter),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2.0),
+                          child: Text(
+                            letter,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: theme.primaryColor,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ],
               ),
             ),

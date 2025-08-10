@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:en_route_concierge/styles/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-final TextStyle basicTextStyle = TextStyle(
-  fontFamily: "SFUIDisplay",
+final TextStyle basicTextStyle = GoogleFonts.playfairDisplay(
   fontWeight: FontWeight.normal,
   fontSize: 16.0,
+  color: lprimaryColor,
 );
 
 final TextTheme textTheme = TextTheme(
@@ -33,16 +34,17 @@ class ThemeScheme {
       hintColor: dsecondaryColor,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
-        iconTheme: IconThemeData(color: Colors.white),
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey[400]!,
-          ),
-        ),
-      ),
-    );
+  backgroundColor: lbackgroundColor,
+  elevation: 0,
+  centerTitle: true,
+  iconTheme: IconThemeData(color: lprimaryColor),
+  titleTextStyle: GoogleFonts.playfairDisplay(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: lprimaryColor,
+  ),  
+),
+);
   }
 
   static ThemeData light() {
@@ -65,3 +67,5 @@ class ThemeScheme {
     );
   }
 }
+
+

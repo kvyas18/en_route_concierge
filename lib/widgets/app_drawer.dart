@@ -66,7 +66,7 @@ class AppDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Garuba OLayemii",
+                        "Joe Smith",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 19.0,
@@ -85,7 +85,7 @@ class AppDrawer extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "444-509-980-103",
+                    "1-111-222-3333",
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: 15.0,

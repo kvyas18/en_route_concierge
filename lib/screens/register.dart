@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:en_route_concierge/router.dart';
 import 'package:en_route_concierge/styles/colors.dart';
 import 'package:en_route_concierge/widgets/custom_text_form_field.dart';
@@ -15,7 +17,6 @@ class _RegisterState extends State<Register> {
   final _countryCodeController = TextEditingController(text: '+234');
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -96,11 +97,7 @@ class _RegisterState extends State<Register> {
                   style: TextButton.styleFrom(
                     backgroundColor: _theme.primaryColor,
                   ),
-                  onPressed: () {
-                    if (_formKey.currentState?.validate() ?? true) {
-                      Navigator.of(context).pushNamed(OtpVerificationRoute);
-                    }
-                  },
+                  onPressed: _registerUser,
                   child: Text(
                     "SIGN UP",
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -180,6 +177,7 @@ class _RegisterState extends State<Register> {
           suffixIcon: SizedBox.shrink(),
           hintText: "Password",
           value: _passwordController.text,
+          obscureText: true,
         ),
         SizedBox(height: 25.0),
         Text(
@@ -191,5 +189,24 @@ class _RegisterState extends State<Register> {
         ),
       ],
     );
+  }
+
+  Future<void> _registerUser() async {
+    if (_formKey.currentState?.validate() ?? true) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      final firstName = _firstNameController.text.trim();
+      final lastName = _lastNameController.text.trim();
+      final phone = '${_countryCodeController.text.trim()}${_phoneController.text.trim()}';
+
+      // Firebase disabled: Just simulate navigation
+      print("Simulating registration with:");
+      print("Name: $firstName $lastName");
+      print("Email: $email");
+      print("Phone: $phone");
+
+      // Simulate navigation to next screen
+      Navigator.of(context).pushNamed(OtpVerificationRoute);
+    }
   }
 }

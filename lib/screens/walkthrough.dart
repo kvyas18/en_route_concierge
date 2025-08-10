@@ -3,83 +3,119 @@ import 'package:provider/provider.dart';
 import 'package:en_route_concierge/providers/walkthrough_provider.dart';
 import 'package:en_route_concierge/router.dart';
 import 'package:en_route_concierge/widgets/walkthrough_stepper.dart';
-import 'package:en_route_concierge/widgets/walkthrough_template.dart';
 
 class WalkThrough extends StatelessWidget {
   final PageController _pageViewController = PageController(initialPage: 0);
+
+  final List<Map<String, String>> walkthroughData = [
+    {
+      "title": "Luxury Delivery, Simplified.",
+      "subtitle":
+          "Schedule secure, white-glove pickups and deliveries at your fingertips — tailored for luxury brands.",
+      "image": "assets/images/walkthrough1.jpg"
+    },
+    {
+      "title": "Earn Trust, Ride with Precision",
+      "subtitle":
+          "Experience consistent, discreet service every time — because your brand deserves nothing less.",
+      "image": "assets/images/walkthrough2.jpg"
+    },
+    {
+      "title": "Invite. Share. Elevate.",
+      "subtitle":
+          "Refer fellow luxury clients and enjoy premium rewards curated exclusively for you.",
+      "image": "assets/images/walkthrough3.jpg"
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final WalkthroughProvider _walkthroughProvider =
+    final walkthroughProvider =
         Provider.of<WalkthroughProvider>(context, listen: false);
+
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: PageView(
-                  controller: _pageViewController,
-                  onPageChanged: (int index) {
-                    _walkthroughProvider.onPageChange(index);
-                  },
-                  children: <Widget>[
-                    WalkThroughTemplate(
-                      title: "Pay with your mobile",
-                      subtitle:
-                          "I know this is crazy, buy i tried something fresh, I hope you love it.",
-                      image: Image.asset("assets/images/walkthrough1.png"),
+      body: PageView.builder(
+        controller: _pageViewController,
+        itemCount: walkthroughData.length,
+        onPageChanged: (index) => walkthroughProvider.onPageChange(index),
+        itemBuilder: (context, index) {
+          final data = walkthroughData[index];
+
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              // 🔥 Fullscreen Background
+              Image.asset(
+                data["image"]!,
+                fit: BoxFit.cover,
+              ),
+
+              // 🖤 Overlay fade
+              Container(color: Colors.black.withOpacity(0.4)),
+
+              // 📄 Text & Button content
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data["title"]!,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                          ),
                     ),
-                    WalkThroughTemplate(
-                      title: "Get bonuses on each ride",
-                      subtitle:
-                          "I know this is crazy, buy i tried something fresh, I hope you love it.",
-                      image: Image.asset("assets/images/walkthrough2.png"),
+                    SizedBox(height: 12),
+                    Text(
+                      data["subtitle"]!,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                     ),
-                    WalkThroughTemplate(
-                      title: "Invite friends and get paid.",
-                      subtitle:
-                          "I know this is crazy, buy i tried something fresh, I hope you love it.",
-                      image: Image.asset("assets/images/walkthrough3.png"),
-                    )
+                    SizedBox(height: 40),
+
+                    // 📍 Bottom row with stepper + button
+                    Row(
+                      children: [
+                        Expanded(
+                          child: WalkthroughStepper(
+                            controller: _pageViewController,
+                          ),
+                        ),
+                        ClipOval(
+                          child: Container(
+                            color: Theme.of(context).primaryColor,
+                            child: IconButton(
+                              icon: Icon(Icons.trending_flat,
+                                  color: Colors.white),
+                              onPressed: () {
+                                if (_pageViewController.page! >= 2) {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      UnAuthenticatedPageRoute);
+                                } else {
+                                  _pageViewController.nextPage(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.ease,
+                                  );
+                                }
+                              },
+                              padding: EdgeInsets.all(13.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(24.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child:
-                          WalkthroughStepper(controller: _pageViewController),
-                    ),
-                    ClipOval(
-                      child: Container(
-                        color: Theme.of(context).primaryColor,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.trending_flat,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            if (_pageViewController.page! >= 2) {
-                              Navigator.of(context).pushReplacementNamed(
-                                  UnAuthenticatedPageRoute);
-                              return;
-                            }
-                            _pageViewController.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease);
-                          },
-                          padding: EdgeInsets.all(13.0),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
             ],
-          ),
-        ),
+          );
+        },
       ),
     );
   }
